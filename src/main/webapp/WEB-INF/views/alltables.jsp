@@ -9,12 +9,17 @@
     <title>Informsystem</title>
     </head>
     <body>
-        <h1>Chose table</h1>
-        <form:form method="GET" commandName="employees">
-            <form:select path="id">
-                <form:option value="" label="-- Choose one--" />
-                <form:options items="${employees}"/>
-            </form:select>
+        <h1>Choose table</h1>
+        <form:form method="GET" commandName="tables">
+        <select name="tableSelect">
+        <option value="-">Choose a Table</option>
+        <c:forEach items="${tables}" var="table">
+                <option value=<c:out value="${table.name}"/>>
+                    <c:out value="${table.name}"/>
+                </option>
+            </c:forEach>
+        </select>
+           
                
         
       

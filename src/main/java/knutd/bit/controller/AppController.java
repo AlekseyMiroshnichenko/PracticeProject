@@ -33,7 +33,7 @@ public class AppController {
 	/*
 	 * This method will list all existing employees.
 	 */
-	
+	/*
         @RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
 	public String listEmployees(ModelMap model) {
 
@@ -41,19 +41,18 @@ public class AppController {
 		model.addAttribute("employees", employees);
 		//return "allemployees";
                 return "alltables";
-	}
+	}*/
         
-        /*
+        
         @RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
 	public String listTables(ModelMap model) {
-
-		List<Table> tableList = new ArrayList<Table>();
-                tableList.add(new Table("Workers"));
-                tableList.add(new Table("Documentation"));
-                tableList.add(new Table("Department"));
-		model.addAttribute("table", tableList);
+                new Table("Workers");
+                new Table("Departments");
+                new Table("Documents");
+                List<Table> tableList = Table.getTables();
+		model.addAttribute("tables", tableList);
 		return "alltables";
-	}*/
+	}
 
 	/*
 	 * This method will provide the medium to add a new employee.

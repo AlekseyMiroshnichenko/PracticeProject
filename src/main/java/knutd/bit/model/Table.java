@@ -5,15 +5,27 @@
  */
 package knutd.bit.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Entity;
+
 /**
  *
  * @author Notebook
  */
-public class Table {
-    String name;
 
+public class Table {
+    static List<Table> tables = new ArrayList<Table>();
+    
+    public static List getTables() {
+        return tables;
+    }
+    
+    private String name;
+    
     public Table(String name) {
         this.name = name;
+        Table.tables.add(this);
     }
 
     public String getName() {
