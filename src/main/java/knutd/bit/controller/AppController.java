@@ -3,6 +3,7 @@ package knutd.bit.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.Valid;
 
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import knutd.bit.model.Employee;
 import knutd.bit.service.EmployeeService;
 import knutd.bit.model.Table;
+import knutd.bit.model.Worker;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/")
@@ -44,14 +48,33 @@ public class AppController {
 	}*/
         
         
-        @RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
+        @RequestMapping(value = { "/"}, method = RequestMethod.GET)
 	public String listTables(ModelMap model) {
-                new Table("Workers");
-                new Table("Departments");
-                new Table("Documents");
                 List<Table> tableList = Table.getTables();
-		model.addAttribute("tables", tableList);
+		//model.addAttribute("tables", tableList);
+		model.addAttribute("tables", new Table("newtable"));
 		return "alltables";
+	}
+        
+        @RequestMapping(value = {"/"}, method = RequestMethod.POST)
+	public String chooseTable(@RequestParam String name, ModelMap model) {
+                model.addAttribute("tableName", name);
+		return "redirect:" + "/list";
+	}
+        
+        @RequestMapping(value = {"/list" }, method = RequestMethod.GET)
+	public String showAllRecords(@ModelAttribute("tableName") String tableName, ModelMap model) {
+                System.out.println(tableName);
+                
+                Worker worker = new Worker();
+                worker.setName("Alex");
+                worker.setSurname("Miroshicnenko");
+                worker.setDepartment("Book");
+                worker.setId(23);
+                List<Worker> recordList = new ArrayList<Worker>();
+                recordList.add(worker);
+    		model.addAttribute("records", recordList);
+		return "allrecords";
 	}
 
 	/*
