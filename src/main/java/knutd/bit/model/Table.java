@@ -16,6 +16,12 @@ import javax.persistence.Entity;
 
 public class Table {
     static List<Table> tables = new ArrayList<Table>();
+    static{
+        tables.add(new Table("Accaunting"));
+        tables.add(new Table("Departments"));
+        tables.add(new Table("Workers"));
+        tables.add(new Table("Documents"));
+    }
     
     public static List getTables() {
         return tables;
@@ -25,7 +31,6 @@ public class Table {
     
     public Table(String name) {
         this.name = name;
-        Table.tables.add(this);
     }
 
     public String getName() {
@@ -36,5 +41,8 @@ public class Table {
         this.name = name;
     }
     
+    public String toString(){
+        return name;
+    }
     
 }
