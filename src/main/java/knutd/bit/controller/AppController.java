@@ -33,25 +33,10 @@ public class AppController {
 	
 	@Autowired
 	MessageSource messageSource;
-
-	/*
-	 * This method will list all existing employees.
-	 */
-	/*
-        @RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
-	public String listEmployees(ModelMap model) {
-
-		List<Employee> employees = service.findAllEmployees();
-		model.addAttribute("employees", employees);
-		//return "allemployees";
-                return "alltables";
-	}*/
         
         
         @RequestMapping(value = { "/"}, method = RequestMethod.GET)
 	public String listTables(ModelMap model) {
-                List<Table> tableList = Table.getTables();
-		//model.addAttribute("tables", tableList);
 		model.addAttribute("tables", new Table("newtable"));
 		return "alltables";
 	}
@@ -59,11 +44,14 @@ public class AppController {
         @RequestMapping(value = {"/"}, method = RequestMethod.POST)
 	public String chooseTable(@RequestParam String name, ModelMap model) {
                 model.addAttribute("tableName", name);
+                model.addAttribute("tables", new Table("afdsk"));
+                model.addAttribute("worker", new Worker());
 		return "redirect:" + "/list";
 	}
         
         @RequestMapping(value = {"/list" }, method = RequestMethod.GET)
-	public String showAllRecords(@ModelAttribute("tableName") String tableName, ModelMap model) {
+	public String showAllRecords(@ModelAttribute("tableName") String tableName,
+                @ModelAttribute("worker") Worker workerF, ModelMap model) {
                 System.out.println(tableName);
                 
                 Worker worker = new Worker();
@@ -76,6 +64,24 @@ public class AppController {
     		model.addAttribute("records", recordList);
 		return "allrecords";
 	}
+        
+        @RequestMapping(value = {"/list" }, method = RequestMethod.POST)
+	public String sortTableByField(@ModelAttribute("tableName") String tableName,
+                @RequestParam String columnName, ModelMap model) {
+                System.out.println(tableName);
+                System.out.println(columnName);
+                
+                Worker worker = new Worker();
+                worker.setName("Alex");
+                worker.setSurname("Miroshicnenko");
+                worker.setDepartment("Book");
+                worker.setId(23);
+                List<Worker> recordList = new ArrayList<Worker>();
+                recordList.add(worker);
+    		model.addAttribute("records", recordList);
+		return "allrecords";
+	}
+        
 
 	/*
 	 * This method will provide the medium to add a new employee.
@@ -163,6 +169,12 @@ public class AppController {
 	@RequestMapping(value = { "/delete-{ssn}-employee" }, method = RequestMethod.GET)
 	public String deleteEmployee(@PathVariable String ssn) {
 		service.deleteEmployeeBySsn(ssn);
+		return "redirect:/list";
+	}
+        
+        @RequestMapping(value = { "/sort" }, method = RequestMethod.POST)
+	public String sortTable(@RequestParam String name, ModelMap model) {
+            System.out.println(model.size());
 		return "redirect:/list";
 	}
 
