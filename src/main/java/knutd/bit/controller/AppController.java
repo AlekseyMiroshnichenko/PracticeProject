@@ -44,32 +44,31 @@ public class AppController {
         @RequestMapping(value = {"/"}, method = RequestMethod.POST)
 	public String chooseTable(@RequestParam String name, ModelMap model) {
                 model.addAttribute("tableName", name);
-                model.addAttribute("tables", new Table("afdsk"));
-                model.addAttribute("worker", new Worker());
 		return "redirect:" + "/list";
 	}
         
         @RequestMapping(value = {"/list" }, method = RequestMethod.GET)
 	public String showAllRecords(@ModelAttribute("tableName") String tableName,
-                @ModelAttribute("worker") Worker workerF, ModelMap model) {
-                System.out.println(tableName);
+                ModelMap model) {
                 
-                Worker worker = new Worker();
+                /*Worker worker = new Worker();
                 worker.setName("Alex");
                 worker.setSurname("Miroshicnenko");
                 worker.setDepartment("Book");
                 worker.setId(23);
                 List<Worker> recordList = new ArrayList<Worker>();
-                recordList.add(worker);
+                recordList.add(worker);*/
+                //List<Worker> recordList = service.sortRecords("Assa", true);
+                List<Worker> recordList = service.findAllRecords();
     		model.addAttribute("records", recordList);
 		return "allrecords";
 	}
         
         @RequestMapping(value = {"/list" }, method = RequestMethod.POST)
 	public String sortTableByField(@ModelAttribute("tableName") String tableName,
-                @RequestParam String columnName, ModelMap model) {
+                @RequestParam(value = "columnSelect", required=false) String columnSelect, ModelMap model) {
                 System.out.println(tableName);
-                System.out.println(columnName);
+                System.out.println(columnSelect);
                 
                 Worker worker = new Worker();
                 worker.setName("Alex");
@@ -173,8 +172,14 @@ public class AppController {
 	}
         
         @RequestMapping(value = { "/sort" }, method = RequestMethod.POST)
-	public String sortTable(@RequestParam String name, ModelMap model) {
-            System.out.println(model.size());
+	public String sortTable(@RequestParam(value = "columnSelect", required = false) String columnSelect,
+                @RequestParam(value = "ascending", required = false) boolean isAsc,
+                @RequestParam(value = "tableName", required = false) String tableName,
+                ModelMap model) {
+            System.out.println(columnSelect);
+            System.out.println(isAsc);
+            System.out.println(tableName);
+            model.addAttribute("tableName", tableName);
 		return "redirect:/list";
 	}
 

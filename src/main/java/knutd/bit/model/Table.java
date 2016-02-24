@@ -28,6 +28,15 @@ public class Table {
     }
     
     private String name;
+    private String field;
+
+    public String getField() {
+        return field;
+    }
+
+    public void setField(String field) {
+        this.field = field;
+    }
     
     public Table(String name) {
         this.name = name;

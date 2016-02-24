@@ -12,19 +12,6 @@
         <h1>Choose table</h1>
         <form:form method="POST" commandName="tables" action="">
             <form:select path="name" items="${tables.getTables()}"/>
-            
-        <%--<select name="tableSelect">
-        <option value="-">Choose a Table</option>
-        <c:forEach items="${tables}" var="table">
-                <option value=<c:out value="${table.name}"/>>
-                    <c:out value="${table.name}"/>
-                </option>
-            </c:forEach>
-        </select>--%>
-           
-               
-        
-      
         <input type="submit" value="Submit"/>
         </form:form>
     </body>

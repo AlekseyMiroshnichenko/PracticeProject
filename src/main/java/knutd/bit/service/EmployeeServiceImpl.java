@@ -1,5 +1,6 @@
 package knutd.bit.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import knutd.bit.dao.EmployeeDao;
+import knutd.bit.dao.WorkerDao;
 import knutd.bit.model.Employee;
+import knutd.bit.model.Worker;
 
 @Service("employeeService")
 @Transactional
@@ -15,6 +18,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
 	private EmployeeDao dao;
+        
+        @Autowired
+        private WorkerDao workerDao;
 	
 	public Employee findById(int id) {
 		return dao.findById(id);
@@ -47,6 +53,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return dao.findAllEmployees();
 	}
 
+    public List<Worker> findAllRecords() {
+            return workerDao.findAllRecords();
+    }
+
 	public Employee findEmployeeBySsn(String ssn) {
 		return dao.findEmployeeBySsn(ssn);
 	}
@@ -55,5 +65,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee employee = findEmployeeBySsn(ssn);
 		return ( employee == null || ((id != null) && (employee.getId() == id)));
 	}
+        
+        public List<Worker> sortRecords(String columnName, boolean isAsc){
+            List<Worker> sortedList;
+            sortedList = workerDao.sortRecords(columnName, isAsc);
+            
+            return sortedList;
+        }
 	
 }
