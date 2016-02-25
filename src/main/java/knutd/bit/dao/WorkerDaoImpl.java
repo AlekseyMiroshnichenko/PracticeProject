@@ -6,11 +6,14 @@
 package knutd.bit.dao;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import knutd.bit.model.Employee;
+import knutd.bit.model.Department;
+import knutd.bit.model.ModelTable;
 import knutd.bit.model.Worker;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -18,16 +21,31 @@ import org.springframework.stereotype.Repository;
  * @author Notebook
  */
 @Repository("workerDao")
-public class WorkerDaoImpl extends AbstractDao<Integer, Worker>implements WorkerDao{
-      public List<Worker> sortRecords(String columnName, boolean isAsc){
+public class WorkerDaoImpl extends AbstractDao<Integer, Worker> implements WorkerDao{
+      public List<ModelTable> sortRecords(String firstColumnSelected
+              , boolean firstIsAsc
+              , String secondColumnSelected
+              , boolean secondIsAsc){
+          
             Criteria criteria = createEntityCriteria();
-		return (List<Worker>) criteria.list();
-                
+            List<ModelTable> records = (List<ModelTable>) criteria
+                    .addOrder(firstIsAsc?Order.asc(firstColumnSelected):Order.desc(firstColumnSelected))
+                    .addOrder(secondIsAsc?Order.asc(secondColumnSelected):Order.desc(secondColumnSelected))
+                    .list();
+            if(!records.isEmpty())
+                return records;
+            else
+                return new ArrayList<ModelTable>();
       }
 
-    public List<Worker> findAllRecords() {
+    public List<ModelTable> findAllRecords() {
         Criteria criteria = createEntityCriteria();
-            return (List<Worker>) criteria.list();   
+        List<ModelTable> records = (List<ModelTable>) criteria.list();
+        if(!records.isEmpty())
+            return records;
+        else
+            return new ArrayList<ModelTable>();
+         
     }
     
     

@@ -20,12 +20,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="WORKERS")
-public class Worker extends AbstractModel{
+public class Worker implements ModelTable{
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "ID", insertable = false, updatable = false)
         private int id;
-        
         
         @NotNull
 	@Size(min=3, max=50)
@@ -41,8 +41,6 @@ public class Worker extends AbstractModel{
         @Size(min=3, max=50)
 	@Column(name = "DEPARTMENT", nullable = false)
 	private String department;
-        
-        private transient String[] columns = {"id", "name", "surname", "department"};
     
         public int getId() {
                 return id;
@@ -74,27 +72,6 @@ public class Worker extends AbstractModel{
 
         public void setDepartment(String department) {
             this.department = department;
-        }
-        
-        @Transient
-        public String[] getNamesOfColumn(){
-            return columns;
-        }
-        @Transient
-        public String getNamesOfColumnForHTML() {
-         //   String[] columns = {"id", "name", "surname", "department"};
-            String records;
-            records = fillingColumns(columns);
-            
-            return records;
-        }
-        @Transient
-        public String getRecordForHTML(){
-            String[] column = {Integer.toString(id), name, surname, department};
-            String records;
-            records = fillingColumns(column);
-            
-            return records;
         }
   
 	@Override

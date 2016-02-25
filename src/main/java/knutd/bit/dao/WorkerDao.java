@@ -6,13 +6,14 @@
 package knutd.bit.dao;
 
 import java.util.List;
-import knutd.bit.model.Worker;
+import knutd.bit.model.ModelTable;
 
 /**
  *
  * @author Notebook
  */
 public interface WorkerDao {
-      public List<Worker> sortRecords(String columnName, boolean isAsc);
-      public List<Worker> findAllRecords();
+      public List<ModelTable> sortRecords(String firstColumnSelected, boolean firstIsAsc
+              ,String secondColumnSelected, boolean secondIsAsc);
+      public List<ModelTable> findAllRecords();
 }

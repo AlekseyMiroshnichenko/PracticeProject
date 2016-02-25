@@ -9,7 +9,6 @@ package knutd.bit.model;
  *
  * @author Admin
  */
-public interface HTMLRepresentable {
-    String getNamesOfColumnForHTML();
-    String getRecordForHTML();
+public interface ModelTable {
+    
 }

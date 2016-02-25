@@ -18,6 +18,8 @@
 		<h2.version>1.4.187</h2.version>
 		<dbunit.version>2.2</dbunit.version>
 	 <project.build.sourceEncoding>windows-1252</project.build.sourceEncoding>
+	 <maven.compiler.source>1.7</maven.compiler.source>
+	 <maven.compiler.target>1.7</maven.compiler.target>
 	</properties>
 
 	<dependencies>

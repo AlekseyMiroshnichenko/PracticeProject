@@ -8,38 +8,82 @@
 	<title>Information System</title>
 
 	<style>
-		tr:first-child{
-			font-weight: bold;
-			background-color: #C6C9C4;
-		}
+		th {
+                    font-weight: normal;
+                    border-bottom: 2px solid #6678b1;
+                    border-right: 30px solid #fff;
+                    border-left: 30px solid #fff;
+                    color: #039;
+                    padding: 8px 2px;
+                  }
+                  td {
+                    border-right: 30px solid #fff;
+                    border-left: 30px solid #fff;
+                    color: #669;
+                    padding: 12px 2px;
+                  }
 	</style>
 
 </head>
 
 
 <body>
-    <h2>List of <c:out value="${tableName}" /></h2>
+    <h2>List of <c:out value="${param.tableName}" /></h2>
     <c:url var="sort" value="/sort"/>
-   <form:form method="POST" modelAtribute="worker" action="${sort}">
-       <input type="hidden" name="tableName" value="${tableName}"> 
-        <input type="submit" value="Sotr by"/>
-        
-        <select name="columnSelect">
-        <c:forEach items="${records.get(0).getNamesOfColumn()}" var="column">
-                <option value=<c:out value="${column}"/>>
-                    <c:out value="${column}"/>
-                </option>
-            </c:forEach>
-        </select>
-   <input type="checkbox" name="ascending" checked="checked"/> askending
+    <form:form method="GET" modelAtribute="worker" action="${sort}">
+       <input type="hidden" name="tableName" value="${param.tableName}"> 
+       <input type="submit" value="Sotr by"/>
+       
+       <div>
+           <c:if test="${!records.isEmpty()}">
+                <select name="firstColumnSelected">
+                <c:forEach items="${printer.getColumnList()}" var="column">
+                    <c:choose>
+                        <c:when test="${column.equals(param.firstColumnSelected)}">
+                            <option value=<c:out value="${column}"/> selected>
+                                <c:out value="${column}"/>
+                            </option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value=<c:out value="${column}"/>>
+                                <c:out value="${column}"/>
+                            </option>
+                        </c:otherwise>
+                    </c:choose> 
+                </c:forEach>
+                </select>
+                
+               <c:if test="${param.firstIsAsc.equals('on')}"><c:set var="firstChecked" value="checked"/></c:if>
+               <input type="checkbox" name="firstIsAsc" <c:out value="${firstChecked}"/>/> askending</br>
+                
+                <select name="secondColumnSelected">
+                <c:forEach items="${printer.getColumnList()}" var="column">
+                    <c:choose>
+                        <c:when test="${column.equals(param.secondColumnSelected)}">
+                            <option value=<c:out value="${column}"/> selected>
+                                <c:out value="${column}"/>
+                            </option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value=<c:out value="${column}"/>>
+                                <c:out value="${column}"/>
+                            </option>
+                        </c:otherwise>
+                    </c:choose> 
+                </c:forEach>
+                </select>
+                
+                <c:if test="${param.secondIsAsc.equals('on')}"><c:set var="secondChecked" value="checked"/></c:if>
+                <input type="checkbox" name="secondIsAsc" <c:out value="${secondChecked}"/>/> askending</br>
+            </c:if>
+        </div>
     </form:form>
+       
 	<table>
-            <c:out value="${records.get(0).getNamesOfColumnForHTML()}" escapeXml="false"/>
-            <c:forEach items="${records}" var="record">
-                ${record.getRecordForHTML()}
-            </c:forEach>
+            <c:out value="${printer.getNamesOfColumnForHTML()}" escapeXml="false"/>
+            <c:out value="${printer.getRecordForHTML()}" escapeXml="false"/>
 	</table>
 	<br/>
-	<a href="<c:url value='/new' />">Add new record</a>
+	<a href="<c:url value='/' />">Change table</a>
 </body>
 </html>
