@@ -3,6 +3,9 @@ package knutd.bit.dao;
 import java.io.Serializable;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NameClassPair;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -11,11 +14,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class AbstractDao<PK extends Serializable, T> {
 	
-	private final Class<T> persistentClass;
+    Class NameClass;
+
+    public void setNameClass(String NameClass) {
+        try {
+            this.NameClass = Class.forName(NameClass);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AbstractDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 	
 	@SuppressWarnings("unchecked")
 	public AbstractDao(){
-		this.persistentClass =(Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+            try {
+                this.NameClass = Class.forName("knutd.bit.model.Department");
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(AbstractDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
 	}
 	
 	@Autowired
@@ -24,17 +39,9 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 	protected Session getSession(){
 		return sessionFactory.getCurrentSession();
 	}
-
-	public void persist(T entity) {
-		getSession().persist(entity);
-	}
-
-	public void delete(T entity) {
-		getSession().delete(entity);
-	}
 	
 	protected Criteria createEntityCriteria(){
-		return getSession().createCriteria(persistentClass);
+		return getSession().createCriteria(NameClass);
 	}
 
 }

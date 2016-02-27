@@ -7,9 +7,9 @@ import knutd.bit.model.Worker;
 
 public interface EmployeeService {
         
-        public List<ModelTable> sortRecords(String firstColumnSelected, boolean firstIsAsc
+        public List<ModelTable> sortRecords(String tableName, String firstColumnSelected, boolean firstIsAsc
               ,String secondColumnSelected, boolean secondIsAsc);
         
-        List<ModelTable> findAllRecords();
+        List<ModelTable> findAllRecords(String tableName);
 	
 }

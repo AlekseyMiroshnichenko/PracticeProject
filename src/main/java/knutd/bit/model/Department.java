@@ -20,20 +20,21 @@ import javax.validation.constraints.Size;
 @Entity
 @javax.persistence.Table(name="DEPARTMENTS")
 public class Department  implements ModelTable{
-    @Id
+        
+        @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "ID", insertable = false, updatable = false)
         private int id;
         
         @NotNull
-	@Size(min=3, max=50)
-	@Column(name = "NAZVA", nullable = false)
-	private String nazva;
+	@Size(min=3, max=70)
+	@Column(name = "department_name", nullable = false)
+	private String departmentName;
         
         @NotNull
-        @Size(min=3, max=50)
-	@Column(name = "ADDRESS", nullable = false)
-	private String address;
+        @Size(min=3, max=30)
+	@Column(name = "phone_number", nullable = false)
+	private String phoneNumber;
 
     public int getId() {
         return id;
@@ -43,20 +44,20 @@ public class Department  implements ModelTable{
         this.id = id;
     }
 
-    public String getNazva() {
-        return nazva;
+    public String getDepartmentName() {
+        return departmentName;
     }
 
-    public void setNazva(String nazva) {
-        this.nazva = nazva;
+    public void setDepartment_name(String departmentName) {
+        this.departmentName = departmentName;
     }
 
-    public String getAddress() {
-        return address;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
         
         

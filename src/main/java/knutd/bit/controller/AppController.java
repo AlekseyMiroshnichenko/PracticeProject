@@ -23,9 +23,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import knutd.bit.model.ModelHTMLPrinter;
 import knutd.bit.model.ModelTable;
-import knutd.bit.model.ModelFactory;
 import knutd.bit.service.EmployeeService;
-import knutd.bit.model.Table;
+import knutd.bit.model.Tables;
 import knutd.bit.model.Worker;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,13 +41,13 @@ public class AppController {
         
         @RequestMapping(value = { "/"}, method = RequestMethod.GET)
 	public String listTables(ModelMap model) {
-		model.addAttribute("tables", new Table("newtable"));
+                model.addAttribute("tables", Tables.values());
 		return "alltables";
 	}
         
         @RequestMapping(value = {"/"}, method = RequestMethod.POST)
-	public String chooseTable(@RequestParam String name, ModelMap model) {
-                model.addAttribute("tableName", name);
+	public String chooseTable(@RequestParam String table, ModelMap model) {
+                model.addAttribute("tableName", table);
 		return "redirect:" + "/list";
 	}
         
@@ -56,7 +55,7 @@ public class AppController {
 	public String showAllRecords(@ModelAttribute("tableName") String tableName,
                 ModelMap model) {    
                  
-                List<ModelTable> recordList = service.findAllRecords();
+                List<ModelTable> recordList = service.findAllRecords(tableName);
                 ModelHTMLPrinter printer = new ModelHTMLPrinter(recordList);
                 model.addAttribute("printer", printer);
     		model.addAttribute("records", recordList);
@@ -88,7 +87,9 @@ public class AppController {
                 @RequestParam(value = "secondIsAsc", required = false) boolean secondIsAsc,
                 ModelMap model) {
             
-            List<ModelTable> recordList = service.sortRecords(firstColumnSelected, firstIsAsc, secondColumnSelected, secondIsAsc);
+            List<ModelTable> recordList = service.sortRecords(tableName
+                    ,firstColumnSelected, firstIsAsc
+                    , secondColumnSelected, secondIsAsc);
             ModelHTMLPrinter printer = new ModelHTMLPrinter(recordList);
             model.addAttribute("printer", printer);
             model.addAttribute("records", recordList);

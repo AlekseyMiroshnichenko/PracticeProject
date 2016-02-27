@@ -18,14 +18,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         @Autowired
         private WorkerDao workerDao;
 
-    public List<ModelTable> findAllRecords() {
-            return workerDao.findAllRecords();
+    public List<ModelTable> findAllRecords(String tableName) {
+            return workerDao.findAllRecords(tableName);
     }
         
-        public List<ModelTable> sortRecords(String firstColumnSelected, boolean firstIsAsc
+        public List<ModelTable> sortRecords(String tableName
+              ,String firstColumnSelected, boolean firstIsAsc
               ,String secondColumnSelected, boolean secondIsAsc){
             List<ModelTable> sortedList;
-            sortedList = workerDao.sortRecords(firstColumnSelected, firstIsAsc, secondColumnSelected, secondIsAsc);
+            sortedList = workerDao.sortRecords(tableName, firstColumnSelected, firstIsAsc, secondColumnSelected, secondIsAsc);
             
             return sortedList;
         }
