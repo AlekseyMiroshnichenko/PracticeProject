@@ -30,17 +30,29 @@
                     color: #669;
                     padding: 12px 2px;
             }
+             a {
+                display: inline-block; /* преобразование ссылок во встроенные блоки */
+                color: #6678b1; /* цвет ссылок */
+                font-weight: bold; /* жирность шрифта */
+                text-decoration: none; /* отмена подчеркивания */
+                border: 2px #6678b1 solid; /* стили рамки */
+                padding: 5px 10px; /* внутренние отступы */
+               }
+            a:hover {
+                border: 2px #f00 solid; /* стили рамки ссылок под курсором мыши */
+            }
 	</style>
 
 </head>
 
 
 <body>
-        <h2>Таблиця <c:out value="${param.tableName}" /></h2>
+    <h2>Таблиця <c:out value="${param.tableName}" /></h2>
+    <a href="<c:url value='/' />">Змінити таблицю</a></br></br> 
     <c:url var="sort" value="/sort"/>
     <form:form method="GET" modelAtribute="worker" action="${sort}">
        <input type="hidden" name="tableName" value="${param.tableName}"> 
-       <input type="submit" value="Сортувати по"/>
+       
        
        <div>
            <c:if test="${!records.isEmpty()}">
@@ -85,14 +97,15 @@
                 <c:if test="${not empty param.secondIsAsc}"><c:set var="secondChecked" value="checked"/></c:if>
                 <input type="checkbox" name="secondIsAsc" <c:out value="${secondChecked}"/>/> зростання</br>
             </c:if>
-        </div>
+        </div><br/>
+        <input type="submit" value="Сортувати"/>
     </form:form>
 	<table>
             <c:out value="${printer.getNamesOfColumnForHTML()}" escapeXml="false"/>
             <c:out value="${printer.getRecordForHTML()}" escapeXml="false"/>
 	</table>
-	<br/>
+	
         
-	<a href="<c:url value='/' />">Змінити таблицю</a>
+	
 </body>
 </html>

@@ -5,6 +5,7 @@
  */
 package knutd.bit.model;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,11 +40,6 @@ public class Document implements ModelTable{
 	@Column(name = "TYPE", nullable = false)
 	private String type;
         
-        @NotNull
-        @DateTimeFormat(pattern="dd/MM/yyyy") 
-        @Column(name = "STORAGE_LIFE", nullable = false)
-        @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-        private LocalDate storageLife;
 
     public int getId() {
         return id;
@@ -69,12 +65,4 @@ public class Document implements ModelTable{
         this.type = type;
     }
 
-    public LocalDate getStorageLife() {
-        return storageLife;
-    }
-
-    public void setStorageLife(LocalDate storageLife) {
-        this.storageLife = storageLife;
-    }
-        
 }
