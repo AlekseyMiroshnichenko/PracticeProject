@@ -14,6 +14,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.Type;
 import java.util.Date;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -27,55 +29,57 @@ public class Accounting implements ModelTable{
         
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "ID", insertable = false, updatable = false)
-        private int id;
+        @Column(name = "NUMBER", insertable = false, updatable = false)
+        private int number;
         
         @NotNull
 	@Size(min=3, max=50)
-	@Column(name = "DOCUMENT", nullable = false)
-	private String document;
+	@Column(name = "DOCUMENT_ID", nullable = false)
+	private String document_id;
         
         @NotNull
-        @DateTimeFormat(pattern="dd/MM/yyyy") 
-        @Column(name = "TIME_OF_CREATION", nullable = false)
-        private Date timeOfCreation;
+        @Type(type="date")
+        @Column(name = "DATE_OF_CREATION", nullable = false)
+        private Date dateOfCreation;
         
         @NotNull
 	@Size(min=3, max=50)
-	@Column(name = "WORKER", nullable = false)
-	private String worker;
+	@Column(name = "WORKER_ID", nullable = false)
+	private String worker_id;
 
-    public int getId() {
-        return id;
+    public int getNumber() {
+        return number;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setNumber(int number) {
+        this.number = number;
     }
 
-    public String getDocument() {
-        return document;
+    public String getDocument_id() {
+        return document_id;
     }
 
-    public void setDocument(String document) {
-        this.document = document;
+    public void setDocument_id(String document_id) {
+        this.document_id = document_id;
     }
 
-    public Date getTimeOfCreation() {
-        return timeOfCreation;
+    public Date getDateOfCreation() {
+        return dateOfCreation;
     }
 
-    public void setTimeOfCreation(Date timeOfCreation) {
-        this.timeOfCreation = timeOfCreation;
+    public void setDateOfCreation(Date dateOfCreation) {
+        this.dateOfCreation = dateOfCreation;
     }
 
-    public String getWorker() {
-        return worker;
+    public String getWorker_id() {
+        return worker_id;
     }
 
-    public void setWorker(String worker) {
-        this.worker = worker;
+    public void setWorker_id(String worker_id) {
+        this.worker_id = worker_id;
     }
+
+   
         
         
         
